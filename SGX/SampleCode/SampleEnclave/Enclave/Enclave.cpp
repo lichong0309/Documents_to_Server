@@ -49,3 +49,13 @@ void printf(const char *fmt, ...)
     va_end(ap);
     ocall_print_string(buf);
 }
+
+void dck_test(char *buf,size_t len)   //拷贝函数
+{
+    const char *secret="Hello Enclave!";
+    if(len>=0)
+    {
+        memcpy(buf,secret,strlen(secret)+1);
+    }
+}
+
