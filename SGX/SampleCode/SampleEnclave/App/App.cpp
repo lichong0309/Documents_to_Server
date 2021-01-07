@@ -203,7 +203,8 @@ int SGX_CDECL main(int argc, char *argv[])
     ecall_libc_functions();
     ecall_libcxx_functions();
     ecall_thread_functions();
-
+    
+    char buffer[LEN]= "Hello world!";
     dck_test(global_eid,buffer,LEN);    //调用函数，一定要使用enclave的id
     printf("%s",buffer);
     /* Destroy the enclave */
