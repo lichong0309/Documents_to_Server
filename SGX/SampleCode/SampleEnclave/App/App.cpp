@@ -8,7 +8,7 @@
 # define MAX_PATH FILENAME_MAX           //这个定义在test.h
 
 #include "sgx_urts.h"
-#include "enclave_u.h"
+//#include "enclave_u.h"
 #include "App.h"
 /* Global EID shared by multiple threads */
 sgx_enclave_id_t global_eid = 0;    //enclave的ID
