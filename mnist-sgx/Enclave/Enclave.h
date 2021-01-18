@@ -41,19 +41,19 @@ extern "C" {
 #endif
 
 void init_array();
-double sigmoid(double x);
-void perceptron();
-double square_error();
-void back_propagation();
-int learning_process();
-int input(char *data);
-void printf(const char *fmt, ...);
-void printf_helloworld();
-void save_nn();
-int predict();
-void load_model();
-void decryptMessage(char *encMessageIn, size_t len, char *decMessageOut, size_t lenOut);
-void encryptMessage(char *decMessageIn, size_t len, char *encMessageOut, size_t lenOut);
+double sigmoid(double x);       /* 激活函数sigmoid*/
+void perceptron();           /**/
+double square_error();              /**/
+void back_propagation();            /**/
+int learning_process();                 /**/
+int input(char *data);                  /**/
+void printf(const char *fmt, ...);              /**/
+void printf_helloworld();                   /**/
+void save_nn();                     /**/
+int predict();                      /**/
+void load_model();              /**/
+void decryptMessage(char *encMessageIn, size_t len, char *decMessageOut, size_t lenOut);            /**/
+void encryptMessage(char *decMessageIn, size_t len, char *encMessageOut, size_t lenOut);               /**/
 
 #if defined(__cplusplus)
 }

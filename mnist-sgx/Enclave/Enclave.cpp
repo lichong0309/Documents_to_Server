@@ -68,13 +68,15 @@ const int height = 28;
 // momentum = Momentum (heuristics to optimize back-propagation algorithm)
 // epsilon = Epsilon, no more iterations if the learning error is smaller than epsilon
 
-const int n1 = width * height; // = 784, without bias neuron
-const int n2 = 128;
-const int n3 = 10; // Ten classes: 0 - 9
-const int epochs = 512;
-const double learning_rate = 1e-3;
-const double momentum = 0.9;
-const double epsilon = 1e-3;
+
+
+const int n1 = width * height; // = 784, without bias neuron    //  神经网络输入的数量
+const int n2 = 128;                                             // 神经网络输入的高
+const int n3 = 10; // Ten classes: 0 - 9                // 神经网络的输出
+const int epochs = 512;                                 // 反向传递迭代的数量
+const double learning_rate = 1e-3;              // 学习率
+const double momentum = 0.9;                    // 冲量
+const double epsilon = 1e-3;                           // 如果学习误差小于epsilon，则不在迭代
 
 NeuralNetwork *nn;
 double test[3];
@@ -132,12 +134,13 @@ void init_array()
 }
 
 // sigmoid function
+//  激活函数
 double sigmoid(double x)
 {
     return 1.0 / (1.0 + exp(-x));
 }
 
-// Forward process - perceptron
+// 前向过程
 void perceptron()
 {
     for (int i = 1; i <= n2; ++i) {
@@ -180,7 +183,7 @@ double square_error()
     return res;
 }
 
-// Back Propagation Algorithm
+// 反向过程
 void back_propagation()
 {
     double sum;
@@ -361,7 +364,7 @@ int predict() {
     return result;
 }
 
-/*
+/*-
  * printf:
  *   Invokes OCALL to display the enclave buffer to the terminal.
  */

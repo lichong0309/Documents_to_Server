@@ -41,8 +41,8 @@ enclave {
      include "../App/App.h"
     
     trusted {
-        public void printf_helloworld();
-        public void init_array();
+        public void printf_helloworld();         /*测试打印*/   
+        public void init_array();       /**/
         public int input([in,size=813] char *data);
         public int learning_process();
         public double square_error();
