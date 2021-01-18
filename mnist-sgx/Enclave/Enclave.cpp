@@ -76,7 +76,7 @@ const int n3 = 10; // Ten classes: 0 - 9                // 神经网络的输出
 const int epochs = 512;                                 // 反向传递迭代的数量
 const double learning_rate = 1e-3;              // 学习率
 const double momentum = 0.9;                    // 冲量
-const double epsilon = 1e-3;                           // 如果学习误差小于epsilon，则不在迭代
+const double epsilon = 1e-3;                           // 如果学习误差小于epsilon，则不再迭代
 
 NeuralNetwork *nn;
 double test[3];
