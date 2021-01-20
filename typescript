@@ -1,0 +1,57 @@
+Script started on 2021-01-20 00:28:17+0000
+]0;root@plab-PC1: /homeroot@plab-PC1:/home# cd 
+]0;root@plab-PC1: ~root@plab-PC1:~# ls[K[Kcd SGX-hardware/
+]0;root@plab-PC1: ~/SGX-hardwareroot@plab-PC1:~/SGX-hardware# ls
+Gemfile  LICENSE  README.md  Rakefile  [0m[01;32mtest-sgx[0m  [01;32mtest-sgx.c[0m
+]0;root@plab-PC1: ~/SGX-hardwareroot@plab-PC1:~/SGX-hardware# ./test-sgx
+eax: a0655 ebx: 4100800 ecx: 7ffafbff edx: bfebfbff
+stepping 5
+model 5
+family 6
+processor type 0
+extended model 10
+extended family 0
+smx: 1
+
+Extended feature bits (EAX=07H, ECX=0H)
+eax: 0 ebx: 29c67af ecx: 40000018 edx: bc000400
+sgx available: 1
+sgx launch control: 1
+
+CPUID Leaf 12H, Sub-Leaf 0 of Intel SGX Capabilities (EAX=12H,ECX=0)
+eax: 0 ebx: 0 ecx: 0 edx: 0
+sgx 1 supported: 0
+sgx 2 supported: 0
+MaxEnclaveSize_Not64: 0
+MaxEnclaveSize_64: 0
+
+CPUID Leaf 12H, Sub-Leaf 1 of Intel SGX Capabilities (EAX=12H,ECX=1)
+eax: 0 ebx: 0 ecx: 0 edx: 0
+
+CPUID Leaf 12H, Sub-Leaf 2 of Intel SGX Capabilities (EAX=12H,ECX=2)
+eax: 0 ebx: 0 ecx: 0 edx: 0
+
+CPUID Leaf 12H, Sub-Leaf 3 of Intel SGX Capabilities (EAX=12H,ECX=3)
+eax: 0 ebx: 0 ecx: 0 edx: 0
+
+CPUID Leaf 12H, Sub-Leaf 4 of Intel SGX Capabilities (EAX=12H,ECX=4)
+eax: 0 ebx: 0 ecx: 0 edx: 0
+
+CPUID Leaf 12H, Sub-Leaf 5 of Intel SGX Capabilities (EAX=12H,ECX=5)
+eax: 0 ebx: 0 ecx: 0 edx: 0
+
+CPUID Leaf 12H, Sub-Leaf 6 of Intel SGX Capabilities (EAX=12H,ECX=6)
+eax: 0 ebx: 0 ecx: 0 edx: 0
+
+CPUID Leaf 12H, Sub-Leaf 7 of Intel SGX Capabilities (EAX=12H,ECX=7)
+eax: 0 ebx: 0 ecx: 0 edx: 0
+
+CPUID Leaf 12H, Sub-Leaf 8 of Intel SGX Capabilities (EAX=12H,ECX=8)
+eax: 0 ebx: 0 ecx: 0 edx: 0
+
+CPUID Leaf 12H, Sub-Leaf 9 of Intel SGX Capabilities (EAX=12H,ECX=9)
+eax: 0 ebx: 0 ecx: 0 edx: 0
+]0;root@plab-PC1: ~/SGX-hardwareroot@plab-PC1:~/SGX-hardware# exit
+exit
+
+Script done on 2021-01-20 00:28:36+0000
