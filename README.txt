@@ -8,7 +8,7 @@ Codename : bionic
 
 2. The way of connecting the server:
 Please input the following command:
-ssh server-1@163.143.95.247 -p 16000
+ssh server-1@163.143.0.102 -p 22
 and, input the password:
 123456
 Then, you can connect the server named server-1 successfully.
