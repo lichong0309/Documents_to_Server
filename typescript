@@ -1,35 +1,31 @@
-Script started on 2021-01-20 00:28:17+0000
-]0;root@plab-PC1: /homeroot@plab-PC1:/home# cd 
-]0;root@plab-PC1: ~root@plab-PC1:~# ls[K[Kcd SGX-hardware/
-]0;root@plab-PC1: ~/SGX-hardwareroot@plab-PC1:~/SGX-hardware# ls
-Gemfile  LICENSE  README.md  Rakefile  [0m[01;32mtest-sgx[0m  [01;32mtest-sgx.c[0m
-]0;root@plab-PC1: ~/SGX-hardwareroot@plab-PC1:~/SGX-hardware# ./test-sgx
-eax: a0655 ebx: 4100800 ecx: 7ffafbff edx: bfebfbff
-stepping 5
-model 5
+Script started on 2021-01-28 10:54:30+0900
+]0;server-1@server-1: ~/SGX-hardware[01;32mserver-1@server-1[00m:[01;34m~/SGX-hardware[00m$ ./test-sgx
+eax: 506e3 ebx: 2100800 ecx: 7ffafbff edx: bfebfbff
+stepping 3
+model 14
 family 6
 processor type 0
-extended model 10
+extended model 5
 extended family 0
 smx: 1
 
 Extended feature bits (EAX=07H, ECX=0H)
-eax: 0 ebx: 29c67af ecx: 40000018 edx: bc000400
+eax: 0 ebx: 29c6fbf ecx: 0 edx: 9c002600
 sgx available: 1
-sgx launch control: 1
+sgx launch control: 0
 
 CPUID Leaf 12H, Sub-Leaf 0 of Intel SGX Capabilities (EAX=12H,ECX=0)
-eax: 0 ebx: 0 ecx: 0 edx: 0
-sgx 1 supported: 0
+eax: 1 ebx: 0 ecx: 0 edx: 241f
+sgx 1 supported: 1
 sgx 2 supported: 0
-MaxEnclaveSize_Not64: 0
-MaxEnclaveSize_64: 0
+MaxEnclaveSize_Not64: 1f
+MaxEnclaveSize_64: 24
 
 CPUID Leaf 12H, Sub-Leaf 1 of Intel SGX Capabilities (EAX=12H,ECX=1)
-eax: 0 ebx: 0 ecx: 0 edx: 0
+eax: 36 ebx: 0 ecx: 1f edx: 0
 
 CPUID Leaf 12H, Sub-Leaf 2 of Intel SGX Capabilities (EAX=12H,ECX=2)
-eax: 0 ebx: 0 ecx: 0 edx: 0
+eax: 80200001 ebx: 0 ecx: 5d80001 edx: 0
 
 CPUID Leaf 12H, Sub-Leaf 3 of Intel SGX Capabilities (EAX=12H,ECX=3)
 eax: 0 ebx: 0 ecx: 0 edx: 0
@@ -51,7 +47,7 @@ eax: 0 ebx: 0 ecx: 0 edx: 0
 
 CPUID Leaf 12H, Sub-Leaf 9 of Intel SGX Capabilities (EAX=12H,ECX=9)
 eax: 0 ebx: 0 ecx: 0 edx: 0
-]0;root@plab-PC1: ~/SGX-hardwareroot@plab-PC1:~/SGX-hardware# exit
+]0;server-1@server-1: ~/SGX-hardware[01;32mserver-1@server-1[00m:[01;34m~/SGX-hardware[00m$ exit
 exit
 
-Script done on 2021-01-20 00:28:36+0000
+Script done on 2021-01-28 10:54:40+0900
