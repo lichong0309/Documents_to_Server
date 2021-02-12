@@ -209,7 +209,7 @@ int SGX_CDECL main(int argc, char *argv[])
     // 训练数据部分
     //train a model on mnist via the Plinius workflow
     clock_gettime(CLOCK_MONOTONIC_RAW, &start);                             // 获得当前时钟，存放到start中，记作为训练开始的时钟
-    train_mnist(cfg);                                                                                           // 训练数据
+    train_mnist(cfg);                                                                                           // 训练数据，神经网络配置文件cfg = MNIST_CFG= "./App/dnet-out/cfg/mnist.cfg"
     clock_gettime(CLOCK_MONOTONIC_RAW, &stop);                                      // 获取当前时钟，存放到stop中，记作为训练结束的时钟
     printf("Total training time: %f mins\n", time_diff(&start, &stop, SEC) / 60);                                                   // 打印训练数据所需要的时间
 
@@ -217,7 +217,7 @@ int SGX_CDECL main(int argc, char *argv[])
     // 测试数据部分
     //test the accuracy of the trained model
     clock_gettime(CLOCK_MONOTONIC_RAW, &start);                                 // 获得当前时钟，存放在start中，记作为测试开始的时钟                         
-    test_mnist(cfg);                                                                                                    // 训练数据
+    test_mnist(cfg);                                                                                                    // 测试数据,神经网络配置文件cfg = MNIST_CFG= "./App/dnet-out/cfg/mnist.cfg"
     clock_gettime(CLOCK_MONOTONIC_RAW, &stop);                                      //  获取当前时钟，存放到stop中，就作为测试结束的时钟
     printf("Total inference time: %f mins\n", time_diff(&start, &stop, SEC) / 60);                          // 打印测试数据所需要的时间
 

@@ -148,28 +148,28 @@ void train_mnist(list *sections, data *training_data, int pmem)
     printf("Training mnist in enclave..\n");
 
     srand(12345);     
-    float avg_loss = 0;
-    float loss = 0;
-    int classes = 10;
-    int N = 60000; //number of training images
-    int cur_batch = 0;
+    float avg_loss = 0;                        // 初始化训练精度acc
+    float loss = 0;                                    // 初始化训练loss 
+    int classes = 10;                               // 数据集的label个数
+    int N = 60000; //number of training images                      // 训练神经网络图片的数量                  
+    int cur_batch = 0;                                  // 
     float progress = 0;
     count = 0;
     int chunk_counter = 0;
 
     unsigned int num_params;
     //allocate enclave model
-    net = create_net_in(sections);
+    net = create_net_in(sections);                  //   ../src/parser.c中的函数，在enclave中产生一个神经网络
 
     //mirror in if PM net exists
-    nv_net = romuluslog::RomulusLog::get_object<NVModel>(0);
+    nv_net = romuluslog::RomulusLog::get_object<NVModel>(0);                            // 实例化nvmodel
     if (nv_net != nullptr)
     {
         //mirror in and resume training
-        nv_net->mirror_in(net, &avg_loss);
-        }
+        nv_net->mirror_in(net, &avg_loss);                              //将网络模型参数从持久的内存中放到enclave中
+    }
 
-    int epoch = (*net->seen) / N;
+    int epoch = (*net->seen) / N;      
     count = 0;
     num_params = get_param_size(net);
     comm_in->model_size = (double)(num_params * 4) / (1024 * 1024);
@@ -293,13 +293,14 @@ void test_mnist(list *sections, data *test_data, int pmem)
     printf("-----Beginning mnist testing----\n");
    
     data test = *test_data;                         //  测试数据
+    
     //获得测试的精度
     // network_accuracies()函数：../src/network.c中的函数，用来测试神经网络的精度acc
     float *acc = network_accuracies(net, test, 2);                              
-    avg_acc += acc[0];
+    avg_acc += acc[0];                      // 得到最终训练的平均精度
 
     printf("Accuracy: %f%%, %d images\n", avg_acc * 100, test.X.rows);
-    free_network(net);
+    free_network(net);                                          // 释放神经网络
 
     /**
      * Test mnist multi
