@@ -33,7 +33,7 @@ void free_section(section *s)
 
 
 
-
+// 读取神经网络配置cfg文件
 list *read_cfg(char *filename)
 {
     FILE *file = fopen(filename, "r");

@@ -261,6 +261,8 @@ void ecall_classify(list *sections, list *labels, image *im)
  * Test trained mnist model
  */
 // 测试神经网络
+// list *sections: list config_sections
+// data *test_data: &test
 void test_mnist(list *sections, data *test_data, int pmem)
 {
 
