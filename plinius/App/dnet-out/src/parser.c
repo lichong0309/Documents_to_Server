@@ -36,7 +36,7 @@ void free_section(section *s)
 // 读取神经网络配置cfg文件
 list *read_cfg(char *filename)
 {
-    printf("read cfg file.");
+    printf("read cfg file.\n");
     FILE *file = fopen(filename, "r");
     if(file == 0) file_error(filename);
     char *line;
