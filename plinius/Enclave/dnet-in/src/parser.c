@@ -809,9 +809,10 @@ int is_network(section *s)
  * The following routine creates a neural net inside the enclave
  * with the values read from the config file in sections
  */
-
+// 在飞地中按照读取到的配置文件config file in sections创建神经网络
 network *create_net_in(list *sections)
 {
+    printf("create network in enclave..\n");
     //list *sections = read_cfg(filename);
     node *n = sections->front;
     if (!n)
