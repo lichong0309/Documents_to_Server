@@ -66,8 +66,8 @@ comm_info *comm_out;
 #define MNIST_TRAIN_LABELS "./App/dnet-out/data/mnist/enc_mnist_labels.data"
 
 
-// darknet框架神经网络的配置文件mnist.cfg路劲
-#define MNIST_CFG "./App/dnet-out/cfg/alexnet.cfg"
+// darknet框架神经网络的配置文件mnist.cfg路径
+#define MNIST_CFG "./App/dnet-out/cfg/mnist.cfg"
 
 
 /* For benchmarking */
