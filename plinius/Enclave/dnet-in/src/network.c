@@ -653,10 +653,12 @@ matrix network_predict_data_multi(network *net, data test, int n)
     return pred;
 }
 
+
+// 测试集在训练模型中预测的矩阵向量
 matrix network_predict_data(network *net, data test)
 {
     int i, j, b;
-    int k = net->outputs;
+    int k = net->outputs;                           // 定义为神经网络的输出
     matrix pred = make_matrix(test.X.rows, k);
     float *X = calloc(net->batch * test.X.cols, sizeof(float));
     for (i = 0; i < test.X.rows; i += net->batch)
@@ -745,10 +747,11 @@ float network_accuracy(network *net, data d)
 float *network_accuracies(network *net, data d, int n)
 {
     static float acc[2];
-    matrix guess = network_predict_data(net, d);
-    acc[0] = matrix_topk_accuracy(d.y, guess, 1);
+    matrix guess = network_predict_data(net, d);                       // 调用函数network_predict_data()获得使用模型得到的预测矩阵     
+    // 将测试集的标签和模型获得的预测矩阵做对比，得到训练模型的精度.
+    acc[0] = matrix_topk_accuracy(d.y, guess, 1);                                   // 调用matrix.c模块里面的函数matrix_topk_accuracy(); d.y表示测试集的标签，guess表示使用训练模型测试得到的预测矩阵
     acc[1] = matrix_topk_accuracy(d.y, guess, n);
-    free_matrix(guess);
+    free_matrix(guess);          // 调用函数 free_matrix()释放函数                       
     return acc;
 }
 
@@ -771,14 +774,16 @@ float network_accuracy_multi(network *net, data d, int n)
     return acc;
 }
 
+
+// enclave中释放神经网络
 void free_network(network *net)
 {
     int i;
     for (i = 0; i < net->n; ++i)
     {
-        free_layer(net->layers[i]);
+        free_layer(net->layers[i]);              // 调用layer.c模块中free_layer()函数,释放掉指定的神经网络层
     }
-    free(net->layers);
+    free(net->layers);                          // 调用c++ 内部函数stdlib.h中的函数free()
     if (net->input)
         free(net->input);
     if (net->truth)

@@ -145,11 +145,17 @@ void test_mnist(char *cfgfile)
 {
     std::string img_path = MNIST_TEST_IMAGES;                   // 定义测试images的路径
     std::string label_path = MNIST_TEST_LABELS;                 // 定义测试labels的路径
-    data test = load_mnist_images(img_path, 10000);         // 加载测试数据 数据x
-    test.y = load_mnist_labels(label_path, 10000);              // 加载测试数据  labelsy
-    list *config_sections = read_cfg(cfgfile);                              // 读取cfgfile配置文件
+    data test = load_mnist_images(img_path, 10000);         // 加载测试数据 数据x, load_mnist_images(): /dnet-out/src/data_mnist.cpp模块函数
+    test.y = load_mnist_labels(label_path, 10000);              // 加载测试数据  labelsy，load_mnist_images():  /dnet-out/src/data_mnist.cpp模块函数
+    list *config_sections = read_cfg(cfgfile);                              // 读取cfgfile配置文件, read_cfg(): /dnet-out/src/parser.c模块函数
 
-    ecall_tester(global_eid, config_sections, &test, 0);            // 调用enclave中的可信函数，测试数据
+
+    // void ecall_tester(list *sections, data *test_data, int pmem)
+    // global_eid : int pmem : 0 
+    // config_sections : list * sections
+    // test : data
+    ecall_tester(global_eid, config_sections, &test, 0);            // 调用enclave中的可信函数，对模型进行测试
+
     printf("Mnist testing complete..\n");
     free_data(test);                                                        // darknet框架函数，释放内存
 }

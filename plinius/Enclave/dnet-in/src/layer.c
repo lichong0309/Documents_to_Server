@@ -3,6 +3,7 @@
 
 #include <stdlib.h>
 
+// 释放掉神经网络层
 void free_layer(layer l)
 {
     if(l.type == DROPOUT){

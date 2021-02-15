@@ -231,7 +231,7 @@ void train_mnist(list *sections, data *training_data, int pmem)
     free_network(net);
 }
 
-// 与外界信息传递的训练函数
+// 与外界信息传递的测试函数
 void ecall_tester(list *sections, data *test_data, int pmem)
 {
     CHECK_REF_POINTER(sections, sizeof(list));
@@ -279,7 +279,7 @@ void test_mnist(list *sections, data *test_data, int pmem)
     nv_net = romuluslog::RomulusLog::get_object<NVModel>(0);                        
     if (nv_net != nullptr)
     {
-        nv_net->mirror_in(net, &avg_loss);                      // 将网络模型参数从持久的内存中放到enclave中
+        nv_net->mirror_in(net, &avg_loss);                      // 将网络模型参数从持久的内存中放到enclave中*********
         printf("Mirrored net in for testing\n");
     }
 
@@ -296,11 +296,12 @@ void test_mnist(list *sections, data *test_data, int pmem)
     
     //获得测试的精度
     // network_accuracies()函数：../src/network.c中的函数，用来测试神经网络的精度acc
+    // 参数： net：神经网络模型；test : 测试的数据集；
     float *acc = network_accuracies(net, test, 2);                              
     avg_acc += acc[0];                      // 得到最终训练的平均精度
 
     printf("Accuracy: %f%%, %d images\n", avg_acc * 100, test.X.rows);
-    free_network(net);                                          // 释放神经网络
+    free_network(net);                                          // 释放神经网络      free_network(net)调用 ../src/parser.c模块中的函数
 
     /**
      * Test mnist multi
