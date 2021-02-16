@@ -658,7 +658,7 @@ matrix network_predict_data_multi(network *net, data test, int n)
 matrix network_predict_data(network *net, data test)
 {
     int i, j, b;
-    int k = net->outputs;                           // 定义为神经网络的输出
+    int k = net->outputs;                           //  改层对应一张输入图片的输入元素个数
     matrix pred = make_matrix(test.X.rows, k);
     float *X = calloc(net->batch * test.X.cols, sizeof(float));
     for (i = 0; i < test.X.rows; i += net->batch)

@@ -1,5 +1,5 @@
 /*
-在飞地中调用外面的函数叫做ocalls
+在飞地中调用外部函数叫做ocall
 void ocall_start_clock()                                                    // 获得ocall时钟开始  
 void ocall_stop_clock()                                                 // 获得ocall时钟结束   
 void ocall_add_loss()                                                       // 
@@ -68,7 +68,7 @@ comm_info *comm_out;
 
 // darknet框架神经网络的配置文件mnist.cfg路径
 // #define MNIST_CFG "./App/dnet-out/cfg/big/cfg50.cfg"
-#define MNIST_CFG "./App/dnet-out/cfg/mnist.cfg"
+#define MNIST_CFG "./App/dnet-out/cfg/alexnet.cfg"
 
 
 /* For benchmarking */
@@ -213,12 +213,12 @@ int SGX_CDECL main(int argc, char *argv[])
     //mnist model config file
     char cfg[128] = MNIST_CFG;                                   // 神经网络的配置文件
 
-    // 训练数据部分
-    //train a model on mnist via the Plinius workflow
-    clock_gettime(CLOCK_MONOTONIC_RAW, &start);                             // 获得当前时钟，存放到start中，记作为训练开始的时钟
-    train_mnist(cfg);                                                                                           // 训练数据，神经网络配置文件cfg = MNIST_CFG= "./App/dnet-out/cfg/mnist.cfg"
-    clock_gettime(CLOCK_MONOTONIC_RAW, &stop);                                      // 获取当前时钟，存放到stop中，记作为训练结束的时钟
-    printf("Total training time: %f mins\n", time_diff(&start, &stop, SEC) / 60);                                                   // 打印训练数据所需要的时间
+    // // 训练数据部分
+    // //train a model on mnist via the Plinius workflow
+    // clock_gettime(CLOCK_MONOTONIC_RAW, &start);                             // 获得当前时钟，存放到start中，记作为训练开始的时钟
+    // train_mnist(cfg);                                                                                           // 训练数据，神经网络配置文件cfg = MNIST_CFG= "./App/dnet-out/cfg/mnist.cfg"
+    // clock_gettime(CLOCK_MONOTONIC_RAW, &stop);                                      // 获取当前时钟，存放到stop中，记作为训练结束的时钟
+    // printf("Total training time: %f mins\n", time_diff(&start, &stop, SEC) / 60);                                                   // 打印训练数据所需要的时间
 
 
     // 测试数据部分

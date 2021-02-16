@@ -97,6 +97,8 @@ void load_pm_data()
 
     return;
 }
+
+
 void get_pm_batch()
 {
     pm_data = romuluslog::RomulusLog::get_object<NVData>(1);
@@ -231,7 +233,7 @@ void train_mnist(list *sections, data *training_data, int pmem)
     }
 
     printf("Done training mnist network..\n");
-    free_network(net);
+    free_network(net);                              // 将enclave内的net释放掉
 }
 
 // 与外界信息传递的测试函数
@@ -264,8 +266,8 @@ void ecall_classify(list *sections, list *labels, image *im)
  * Test trained mnist model
  */
 // 测试神经网络
-// list *sections: list config_sections
-// data *test_data: &test
+// list *sections: list config_sections，网络的配置文件
+// data *test_data: &test，测试数据
 void test_mnist(list *sections, data *test_data, int pmem)
 {
 

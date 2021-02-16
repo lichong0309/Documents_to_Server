@@ -368,7 +368,7 @@ typedef struct network
     int *t;
     float epoch;
     int subdivisions;
-    layer *layers;
+    layer *layers;                          // 神经网络分层的成员
     float *output;
     learning_rate_policy policy;
 
@@ -542,17 +542,21 @@ typedef struct node
     struct node *prev;
 } node;
 
+
+// 双向链表：保存所有网络结构参数
 typedef struct list
 {
-    int size;
-    node *front;
-    node *back;
+    int size;                                   // list的所有节点的个数
+    node *front;                        // list的首节点
+    node *back;                     // list的普通节点
 } list;
 
+
+// 定义section：保存网络中每一层的网络类型和参数
 typedef struct
 {
-    char *type;
-    list *options;
+    char *type;                         // 网络类型
+    list *options;                      // 网络参数
 } section;
 
 /**
