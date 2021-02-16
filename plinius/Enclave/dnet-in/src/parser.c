@@ -1143,6 +1143,7 @@ unsigned int get_param_size(network *net)
             num_params += l.c * 3;
         }
     }
+    printf("test_3\n");
     return num_params;
 }
 

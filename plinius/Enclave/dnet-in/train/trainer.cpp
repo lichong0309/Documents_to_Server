@@ -162,17 +162,17 @@ void train_mnist(list *sections, data *training_data, int pmem)
     net = create_net_in(sections);                  //   ../src/parser.c中的函数，在enclave中产生一个神经网络
     printf("test_1\n");
     //mirror in if PM net exists
-    nv_net = romuluslog::RomulusLog::get_object<NVModel>(0);                            // 实例化nvmodel
+    nv_net = romuluslog::RomulusLog::get_object<NVModel>(0);                            // 实例化nvmodel            //test_4
     if (nv_net != nullptr)
     {
         //mirror in and resume training
-        nv_net->mirror_in(net, &avg_loss);                              //将网络模型参数从持久的内存中放到enclave中
+        nv_net->mirror_in(net, &avg_loss);                              //将网络模型参数从持久的内存中放到enclave中         // test_5
     }
 
     int epoch = (*net->seen) / N;      
     count = 0;
 
-    num_params = get_param_size(net);                       // 获得神经网络参数数量                     // test_2
+    num_params = get_param_size(net);                       // 获得神经网络参数数量                     // test_2, test_3
     // 由参数计算神经网络模型的大小：模型的参数按照float形式存储，占4个字节，所以神经网络模型的大小与模型的参数数量有关系。
     comm_in->model_size = (double)(num_params * 4) / (1024 * 1024);                     // 使用参数计算神经网络模型的大小,转换成兆(M)
 

@@ -111,7 +111,8 @@ void NVModel::allocator(network *net)
  */
 
 void NVModel::mirror_in(network *net, float *avg_loss)
-{
+{   
+    printf("test_5\n");
     /**
      * We traverse the persistent linked list of layers 
      * and mirror the corresponding weights into the enclave neural net
