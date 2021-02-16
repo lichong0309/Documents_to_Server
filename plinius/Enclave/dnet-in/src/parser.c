@@ -1114,6 +1114,7 @@ void save_connected_weights(layer l, int fp)
 /* Get size of saved params approx= model size */
 unsigned int get_param_size(network *net)
 {
+    printf("test_2\n");
     unsigned int num_params = 0;
     for (int i = 0; i < net->n; ++i)
     {

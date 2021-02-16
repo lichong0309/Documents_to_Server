@@ -172,7 +172,7 @@ void train_mnist(list *sections, data *training_data, int pmem)
     int epoch = (*net->seen) / N;      
     count = 0;
 
-    num_params = get_param_size(net);                       // 获得神经网络参数数量
+    num_params = get_param_size(net);                       // 获得神经网络参数数量                     // test_2
     // 由参数计算神经网络模型的大小：模型的参数按照float形式存储，占4个字节，所以神经网络模型的大小与模型的参数数量有关系。
     comm_in->model_size = (double)(num_params * 4) / (1024 * 1024);                     // 使用参数计算神经网络模型的大小,转换成兆(M)
 
