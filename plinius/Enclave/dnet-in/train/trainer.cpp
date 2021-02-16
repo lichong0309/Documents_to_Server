@@ -160,7 +160,7 @@ void train_mnist(list *sections, data *training_data, int pmem)
     unsigned int num_params;
     //allocate enclave model
     net = create_net_in(sections);                  //   ../src/parser.c中的函数，在enclave中产生一个神经网络
-
+    printf("test_1\n");
     //mirror in if PM net exists
     nv_net = romuluslog::RomulusLog::get_object<NVModel>(0);                            // 实例化nvmodel
     if (nv_net != nullptr)
