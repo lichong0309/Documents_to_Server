@@ -67,7 +67,7 @@ comm_info *comm_out;
 
 
 // darknet框架神经网络的配置文件mnist.cfg路径
-#define MNIST_CFG "./App/dnet-out/cfg/cifar.cfg"
+#define MNIST_CFG "./App/dnet-out/cfg/alexnet.cfg"
 
 
 /* For benchmarking */
