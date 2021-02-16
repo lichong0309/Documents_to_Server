@@ -324,7 +324,7 @@ public:
     template <typename T>
     static inline T *get_object(int idx)
     {
-        printf("test_4\n");
+        sgx_printf("test_4\n");
         // Equivalent to persist<void*>.pload()
         return (T *)gRomLog.per->objects[idx];
     }
