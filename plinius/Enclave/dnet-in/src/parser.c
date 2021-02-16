@@ -1001,7 +1001,7 @@ network *create_net_in(list *sections)
             params.c = l.out_c;
             params.inputs = l.outputs;
         }
-        printf("creating network in enclave has done..\n")
+        //printf("creating network in enclave has done..\n")
     }
 
     DEBUG_PRINT();
