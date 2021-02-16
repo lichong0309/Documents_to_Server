@@ -166,7 +166,7 @@ void train_mnist(list *sections, data *training_data, int pmem)
     if (nv_net != nullptr)
     {
         //mirror in and resume training
-        nv_net->mirror_in(net, &avg_loss);                              //将网络模型参数从持久的内存中放到enclave中         // test_5
+        nv_net->mirror_in(net, &avg_loss);                              //将网络模型参数从持久的内存中放到enclave中         // test_5, test_6
     }
 
     int epoch = (*net->seen) / N;      
@@ -226,7 +226,7 @@ void train_mnist(list *sections, data *training_data, int pmem)
         }
 
         //mirror model out to PM
-        nv_net->mirror_out(net, &avg_loss);
+        nv_net->mirror_out(net, &avg_loss);                     // 将训练好的模型放到PM中
     }
 
     printf("Done training mnist network..\n");

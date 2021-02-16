@@ -189,6 +189,7 @@ void NVModel::mirror_in(network *net, float *avg_loss)
             break;
         }
     }
+    printf("test_6\n");
 }
 
 /**
