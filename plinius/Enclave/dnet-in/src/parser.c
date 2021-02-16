@@ -1001,10 +1001,9 @@ network *create_net_in(list *sections)
             params.c = l.out_c;
             params.inputs = l.outputs;
         }
-        //printf("creating network in enclave has done..\n")
     }
 
-    DEBUG_PRINT();
+    DEBUG_sPRINT();
     ocall_free_list(sections);
     layer out = get_network_output_layer(net);
     net->outputs = out.outputs;
