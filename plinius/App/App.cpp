@@ -151,12 +151,12 @@ float test_mnist(char *cfgfile)
     test.y = load_mnist_labels(label_path, 10000);              // 加载测试数据  labelsy，load_mnist_images():  /dnet-out/src/data_mnist.cpp模块函数
     list *config_sections = read_cfg(cfgfile);                              // 读取cfgfile配置文件, read_cfg(): /dnet-out/src/parser.c模块函数
 
-
+    float type = 0.1; 
     // void ecall_tester(list *sections, data *test_data, int pmem)
     // global_eid : int pmem : 0 
     // config_sections : list * sections
     // test : data
-    float middle_layer_output = ecall_tester(global_eid, config_sections, &test, 0);            // 调用enclave中的可信函数，对模型进行测试
+    float middle_layer_output = ecall_tester(global_eid, type, config_sections, &test, 0);            // 调用enclave中的可信函数，对模型进行测试
 
     printf("Mnist testing complete..\n");
     free_data(test);                                                        // darknet框架函数，释放内存
