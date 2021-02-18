@@ -68,7 +68,7 @@ comm_info *comm_out;
 
 // darknet框架神经网络的配置文件mnist.cfg路径
 // #define MNIST_CFG "./App/dnet-out/cfg/big/cfg50.cfg"
-#define MNIST_CFG "./App/dnet-out/cfg/alexnet_1.cfg"
+#define MNIST_CFG "./App/dnet-out/cfg/alexnet.cfg"
 
 
 /* For benchmarking */
@@ -227,7 +227,7 @@ int SGX_CDECL main(int argc, char *argv[])
     // 程序执行完成，销毁enclave
     sgx_destroy_enclave(global_eid);  
 
-    
+
     // 传输数据，数据为float middle_layer_output;
 
     return 0;
