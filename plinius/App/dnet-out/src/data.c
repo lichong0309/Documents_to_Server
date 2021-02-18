@@ -8,7 +8,6 @@
 #include <string.h>
 
 
-
 pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 
 list *get_paths(char *filename)

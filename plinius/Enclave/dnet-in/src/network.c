@@ -196,21 +196,31 @@ network *make_network(int n)
     return net;
 }
 
+
+/* 
+** 神经网络前向传播
+** 向前计算网络net每一层的输出
+** 遍历net的每一层网络，从第0层到最后一层，逐层计算每层的输出
+*/
 void forward_network(network *netp)
 {
-
+    // net.n表示神经网络层的数量
     network net = *netp;
     int i;
+    // 遍历所有层，从第一层到最后一层，逐层进行前向传播，网络共有net.n层
     for (i = 0; i < net.n; ++i)
-    {
-        net.index = i;
-        layer l = net.layers[i];
+    {   // 当前正在进行第i层的处理
+        net.index = i;                          // 第i层
+        layer l = net.layers[i];         //  获取当前层
+
+        //如果当前层的l.delta已经动态分配了内存，则调用fill_cpu()函数将其所有元素初始化为0
+        // 第一参数为l.delta的元素个数，第二个参数为初始化值，为0
         if (l.delta)
         {
             fill_cpu(l.outputs * l.batch, 0, l.delta, 1);
         }
-        l.forward(l, net);
-        net.input = l.output;
+        l.forward(l, net);                                  // 前向传播：完成当前层向前推理
+        net.input = l.output;        // 完成某一层的推理时，置网络的输入为当前层的输出（这将成为下一层网络的输入）
         if (l.truth)
         {
             net.truth = l.output;
