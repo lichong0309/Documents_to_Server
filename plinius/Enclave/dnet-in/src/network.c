@@ -731,6 +731,7 @@ matrix network_predict_data(network *net, data test)
 // 返回值为一个float类型的指针
 float *my_network_predict_data(network *net, data test)
 {
+    float *middle_output;
     int i, j, b;
     int k = net->outputs;                           //  改层对应一张输入图片的输入元素个数
     matrix pred = make_matrix(test.X.rows, k);
