@@ -743,7 +743,7 @@ float *my_network_predict_data(network *net, data test)
                 break;
             memcpy(X + b * test.X.cols, test.X.vals[i + b], test.X.cols * sizeof(float));
         }
-        float *out = network_predict(net, X);
+        float *middle_output = network_predict(net, X);
     }
     //     for (b = 0; b < net->batch; ++b)
     //     {
@@ -756,7 +756,7 @@ float *my_network_predict_data(network *net, data test)
     //     }
     // }
     free(X);
-    return out;
+    return middle_output;
 }
 
 /* void print_network(network *net)
