@@ -84,6 +84,8 @@ void ocall_start_clock()                    // 存储当前时间到 struct time
     // clockid_t clk_id用于指定计时时钟的类型。
     // CLOCK_MONOTONIC_RAW: 本地振荡器，不受NTP约束。
 }   
+
+
 void ocall_stop_clock()                         // 存储当前时间到strcut timespect *stop中，作为程序的结束的时间点                     
 {
     clock_gettime(CLOCK_MONOTONIC_RAW, &stop);
@@ -102,7 +104,7 @@ void data_malloc(size_t chunk)
 }
 
 //This ocall reads encrypted mnist data from disk to DRAM
-//将加密的minist训练集放到DRAM中
+//将加密的mnist训练集放到DRAM中
 void ocall_read_disk_chunk()
 {
 
