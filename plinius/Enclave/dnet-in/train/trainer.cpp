@@ -376,7 +376,7 @@ float test_mnist(list *sections, data *test_data, int pmem)
     if (net == NULL)
     {
         printf("No neural network in enclave..\n");
-        return;
+        return 0;
     }
     srand(12345);
 
