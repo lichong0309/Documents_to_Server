@@ -246,7 +246,7 @@ float ecall_tester(list *sections, data *test_data, int pmem)
      * before any assignment 
      */
     sgx_lfence();
-    float middle_layer_ouput  = test_mnist(sections, test_data, pmem,m_layer);
+    float middle_layer_ouput  = test_mnist(sections, test_data, pmem);
     return middle_layer_ouput;                      // 返回float的数组
 }
 
@@ -369,8 +369,8 @@ float test_mnist(list *sections, data *test_data, int pmem)
     num_par_test = get_param_size(net);                                      // 获取神经网络参数数量
 
     // 由参数计算神经网络模型的大小：模型的参数按照float形式存储，占4个字节，所以神经网络模型的大小与模型的参数数量有关系。
-    comm_in->model_size = (double)(num_params * 4) / (1024 * 1024);                     // 使用参数计算神经网络模型的大小,转换成兆(M)
-    printf("Number of params: %d Model size: %f\n", num_params, comm_in->model_size);                   // 输出模型的大小
+    comm_in->model_size = (double)(num_par_test * 4) / (1024 * 1024);                     // 使用参数计算神经网络模型的大小,转换成兆(M)
+    printf("Number of params: %d Model size: %f\n", num_par_test, comm_in->model_size);                   // 输出模型的大小
 
     // 提示
     if (net == NULL)
