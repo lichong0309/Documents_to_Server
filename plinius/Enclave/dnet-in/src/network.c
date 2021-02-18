@@ -744,6 +744,7 @@ float *my_network_predict_data(network *net, data test)
             memcpy(X + b * test.X.cols, test.X.vals[i + b], test.X.cols * sizeof(float));
         }
         float *out = network_predict(net, X);
+    }
     //     for (b = 0; b < net->batch; ++b)
     //     {
     //         if (i + b == test.X.rows)
