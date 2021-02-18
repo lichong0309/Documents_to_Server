@@ -229,6 +229,38 @@ void forward_network(network *netp)
     calc_network_cost(netp);
 }
 
+
+
+void my_forward_network(network *netp)
+{
+    // net.n表示神经网络层的数量
+    network net = *netp;
+    int i;
+    // 遍历所有层，从第一层到最后一层，逐层进行前向传播，网络共有net.n层
+    for (i = 0; i < net.n; ++i)
+    {   // 当前正在进行第i层的处理
+        net.index = i;                          // 第i层
+        layer l = net.layers[i];         //  获取当前层
+
+        //如果当前层的l.delta已经动态分配了内存，则调用fill_cpu()函数将其所有元素初始化为0
+        // 第一参数为l.delta的元素个数，第二个参数为初始化值，为0
+        if (l.delta)
+        {
+            fill_cpu(l.outputs * l.batch, 0, l.delta, 1);
+        }
+        l.forward(l, net);                                  // 前向传播：完成当前层向前推理
+        net.input = l.output;        // 完成某一层的推理时，置网络的输入为当前层的输出（这将成为下一层网络的输入）
+        if (l.truth)
+        {
+            net.truth = l.output;
+        }
+    }
+    calc_network_cost(netp);
+}
+
+
+
+
 void update_network(network *netp)
 {
 
@@ -694,6 +726,38 @@ matrix network_predict_data(network *net, data test)
     return pred;
 }
 
+
+// 测试集在训练模型中预测的矩阵向量
+// 返回值为一个float类型的指针
+float *my_network_predict_data(network *net, data test)
+{
+    int i, j, b;
+    int k = net->outputs;                           //  改层对应一张输入图片的输入元素个数
+    matrix pred = make_matrix(test.X.rows, k);
+    float *X = calloc(net->batch * test.X.cols, sizeof(float));
+    for (i = 0; i < test.X.rows; i += net->batch)
+    {
+        for (b = 0; b < net->batch; ++b)
+        {
+            if (i + b == test.X.rows)
+                break;
+            memcpy(X + b * test.X.cols, test.X.vals[i + b], test.X.cols * sizeof(float));
+        }
+        float *out = network_predict(net, X);
+    //     for (b = 0; b < net->batch; ++b)
+    //     {
+    //         if (i + b == test.X.rows)
+    //             break;
+    //         for (j = 0; j < k; ++j)
+    //         {
+    //             pred.vals[i + b][j] = out[j + b * k];
+    //         }
+    //     }
+    // }
+    free(X);
+    return out;
+}
+
 /* void print_network(network *net)
 {
     int i,j;
@@ -755,7 +819,7 @@ float network_accuracy(network *net, data d)
 
 // 测试神经网络acc
 float *network_accuracies(network *net, data d, int n)
-{
+{   
     static float acc[2];
     matrix guess = network_predict_data(net, d);                       // 调用函数network_predict_data()获得使用模型得到的预测矩阵     
     // 将测试集的标签和模型获得的预测矩阵做对比，得到训练模型的精度.

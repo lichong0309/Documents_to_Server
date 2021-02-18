@@ -362,6 +362,7 @@ typedef enum
 
 typedef struct network
 {
+    // int m_layer;                    // 神经网络从第m_layer层开始分层
     int n;
     int batch;
     size_t *seen;

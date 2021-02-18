@@ -41,7 +41,7 @@ extern "C"
     void train_cifar(char *cfgfile);
     void test_cifar(char *cfgfile);
     void train_mnist(char *cfgfile);
-    void test_mnist(char *cfgfile);
+    float test_mnist(char *cfgfile);
     void test_tiny(char *cfgfile);
     void ocall_read_disk_chunk();
 

@@ -109,7 +109,6 @@ void NVModel::allocator(network *net)
  * Mirrors/recovers network params from persistent memory into the enclave
  * i.e nv_model --> net
  */
-
 void NVModel::mirror_in(network *net, float *avg_loss)
 {   
     printf("test_5\n");

@@ -237,7 +237,7 @@ void train_mnist(list *sections, data *training_data, int pmem)
 }
 
 // 与外界信息传递的测试函数
-void ecall_tester(list *sections, data *test_data, int pmem)
+float ecall_tester(list *sections, data *test_data, int pmem)
 {
     CHECK_REF_POINTER(sections, sizeof(list));
     CHECK_REF_POINTER(test_data, sizeof(data));
@@ -246,7 +246,8 @@ void ecall_tester(list *sections, data *test_data, int pmem)
      * before any assignment 
      */
     sgx_lfence();
-    test_mnist(sections, test_data, pmem);
+    float middle_layer_ouput  = test_mnist(sections, test_data, pmem,m_layer);
+    return middle_layer_ouput;                      // 返回float的数组
 }
 
 void ecall_classify(list *sections, list *labels, image *im)
@@ -262,14 +263,97 @@ void ecall_classify(list *sections, list *labels, image *im)
     //classify_tiny(sections, labels, im, 5);
 }
 
+// /**
+//  * Test trained mnist model
+//  */
+// // 测试神经网络
+// // list *sections: list config_sections，网络的配置文件
+// // data *test_data: &test，测试数据
+// void test_mnist(list *sections, data *test_data, int pmem)
+// {
+
+//     if (pmem)
+//     {
+//         //dummy variable
+//     }
+
+//     srand(12345);               // ../src/utils.c中的函数，初始化随机数发生器
+//     float avg_loss = 0;                         // 初始化loss
+//     float avg_acc = 0;                          // 初始化 acc
+//     network *net = create_net_in(sections);                 //     ../src/parser.c中的函数，在enclave中产生一个神经网络
+    
+//     // 实例化nvmodel
+//     nv_net = romuluslog::RomulusLog::get_object<NVModel>(0);                        
+//     if (nv_net != nullptr)
+//     {
+//         nv_net->mirror_in(net, &avg_loss);                      // 将网络模型参数从持久的内存中放到enclave中*********
+//         printf("Mirrored net in for testing\n");
+//     }
+
+//     if (net == NULL)
+//     {
+//         printf("No neural network in enclave..\n");
+//         return;
+//     }
+//     srand(12345);
+
+//     printf("-----Beginning mnist testing----\n");
+   
+//     data test = *test_data;                         //  测试数据
+    
+//     //获得测试的精度
+//     // network_accuracies()函数：../src/network.c中的函数，用来测试神经网络的精度acc
+//     // 参数： net：神经网络模型；test : 测试的数据集；
+//     float *acc = network_accuracies(net, test, 2);                              
+//     avg_acc += acc[0];                      // 得到最终训练的平均精度
+
+//     printf("Accuracy: %f%%, %d images\n", avg_acc * 100, test.X.rows);
+//     free_network(net);                                          // 释放神经网络      free_network(net)调用 ../src/parser.c模块中的函数
+
+//     /**
+//      * Test mnist multi
+//      *
+//     float avg_acc = 0;
+//     data test = *test_data;
+//     image im;
+
+//     for (int i = 0; i < test.X.rows; ++i)
+//     {
+//          im = float_to_image(28, 28, 1, test.X.vals[i]);
+
+//         float pred[10] = {0};
+
+//         float *p = network_predict(net, im.data);
+//         axpy_cpu(10, 1, p, 1, pred, 1);
+//         flip_image(im);
+//         p = network_predict(net, im.data);
+//         axpy_cpu(10, 1, p, 1, pred, 1);
+
+//         int index = max_index(pred, 10);
+//         int class = max_index(test.y.vals[i], 10);
+//         if (index == class)
+//             avg_acc += 1;
+        
+//        printf("%4d: %.2f%%\n", i, 100. * avg_acc / (i + 1)); //un/comment to see/hide accuracy progress
+//     }
+//     printf("Overall prediction accuracy: %2f%%\n", 100. * avg_acc / test.X.rows);
+//     free_network(net);    
+//     */
+// }
+
+
+
+
+
 /**
  * Test trained mnist model
  */
 // 测试神经网络
 // list *sections: list config_sections，网络的配置文件
 // data *test_data: &test，测试数据
-void test_mnist(list *sections, data *test_data, int pmem)
+float test_mnist(list *sections, data *test_data, int pmem)
 {
+    unsigned int num_par_test ;
 
     if (pmem)
     {
@@ -280,16 +364,15 @@ void test_mnist(list *sections, data *test_data, int pmem)
     float avg_loss = 0;                         // 初始化loss
     float avg_acc = 0;                          // 初始化 acc
     network *net = create_net_in(sections);                 //     ../src/parser.c中的函数，在enclave中产生一个神经网络
+    
 
-    //instantiate nvmodel           
-    // 实例化nvmodel
-    nv_net = romuluslog::RomulusLog::get_object<NVModel>(0);                        
-    if (nv_net != nullptr)
-    {
-        nv_net->mirror_in(net, &avg_loss);                      // 将网络模型参数从持久的内存中放到enclave中*********
-        printf("Mirrored net in for testing\n");
-    }
+    num_par_test = get_param_size(net);                                      // 获取神经网络参数数量
 
+    // 由参数计算神经网络模型的大小：模型的参数按照float形式存储，占4个字节，所以神经网络模型的大小与模型的参数数量有关系。
+    comm_in->model_size = (double)(num_params * 4) / (1024 * 1024);                     // 使用参数计算神经网络模型的大小,转换成兆(M)
+    printf("Number of params: %d Model size: %f\n", num_params, comm_in->model_size);                   // 输出模型的大小
+
+    // 提示
     if (net == NULL)
     {
         printf("No neural network in enclave..\n");
@@ -301,42 +384,8 @@ void test_mnist(list *sections, data *test_data, int pmem)
    
     data test = *test_data;                         //  测试数据
     
-    //获得测试的精度
-    // network_accuracies()函数：../src/network.c中的函数，用来测试神经网络的精度acc
-    // 参数： net：神经网络模型；test : 测试的数据集；
-    float *acc = network_accuracies(net, test, 2);                              
-    avg_acc += acc[0];                      // 得到最终训练的平均精度
-
-    printf("Accuracy: %f%%, %d images\n", avg_acc * 100, test.X.rows);
+    float *middle_layer_output = my_network_predict_data(net, test);
     free_network(net);                                          // 释放神经网络      free_network(net)调用 ../src/parser.c模块中的函数
+    return *middle_layer_output ;                            // 返回float数组
 
-    /**
-     * Test mnist multi
-     *
-    float avg_acc = 0;
-    data test = *test_data;
-    image im;
-
-    for (int i = 0; i < test.X.rows; ++i)
-    {
-         im = float_to_image(28, 28, 1, test.X.vals[i]);
-
-        float pred[10] = {0};
-
-        float *p = network_predict(net, im.data);
-        axpy_cpu(10, 1, p, 1, pred, 1);
-        flip_image(im);
-        p = network_predict(net, im.data);
-        axpy_cpu(10, 1, p, 1, pred, 1);
-
-        int index = max_index(pred, 10);
-        int class = max_index(test.y.vals[i], 10);
-        if (index == class)
-            avg_acc += 1;
-        
-       printf("%4d: %.2f%%\n", i, 100. * avg_acc / (i + 1)); //un/comment to see/hide accuracy progress
-    }
-    printf("Overall prediction accuracy: %2f%%\n", 100. * avg_acc / test.X.rows);
-    free_network(net);    
-    */
 }
