@@ -237,7 +237,7 @@ void train_mnist(list *sections, data *training_data, int pmem)
 }
 
 // 与外界信息传递的测试函数
-float ecall_tester(list *sections, data *test_data, int pmem)
+float *ecall_tester(list *sections, data *test_data, int pmem)
 {
     CHECK_REF_POINTER(sections, sizeof(list));
     CHECK_REF_POINTER(test_data, sizeof(data));
@@ -246,7 +246,7 @@ float ecall_tester(list *sections, data *test_data, int pmem)
      * before any assignment 
      */
     sgx_lfence();
-    float middle_layer_ouput  = test_mnist(sections, test_data, pmem);
+    float *middle_layer_ouput  = test_mnist(sections, test_data, pmem);
     return middle_layer_ouput;                      // 返回float的数组
 }
 
@@ -351,7 +351,7 @@ void ecall_classify(list *sections, list *labels, image *im)
 // 测试神经网络
 // list *sections: list config_sections，网络的配置文件
 // data *test_data: &test，测试数据
-float test_mnist(list *sections, data *test_data, int pmem)
+float * test_mnist(list *sections, data *test_data, int pmem)
 {
     unsigned int num_par_test ;
 
@@ -386,6 +386,6 @@ float test_mnist(list *sections, data *test_data, int pmem)
     
     float *middle_layer_output = my_network_predict_data(net, test);
     free_network(net);                                          // 释放神经网络      free_network(net)调用 ../src/parser.c模块中的函数
-    return *middle_layer_output ;                            // 返回float数组
+    return middle_layer_output ;                            // 返回float数组
 
 }

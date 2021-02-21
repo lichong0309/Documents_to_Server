@@ -151,16 +151,16 @@ float test_mnist(char *cfgfile)
     test.y = load_mnist_labels(label_path, 10000);              // 加载测试数据  labelsy，load_mnist_images():  /dnet-out/src/data_mnist.cpp模块函数
     list *config_sections = read_cfg(cfgfile);                              // 读取cfgfile配置文件, read_cfg(): /dnet-out/src/parser.c模块函数
 
-    float type[] = {0.1}; 
+    float *middle_layer_output ;
     // void ecall_tester(list *sections, data *test_data, int pmem)
     // global_eid : int pmem : 0 
     // config_sections : list * sections
     // test : data
-    float middle_layer_output = ecall_tester(global_eid, type, config_sections, &test, 0);            // 调用enclave中的可信函数，对模型进行测试
+    ecall_tester(global_eid, middle_layer_output, config_sections, &test, 0);            // 调用enclave中的可信函数，返回中间层的输出结果，6对模型进行测试
 
     printf("Mnist testing complete..\n");
     free_data(test);                                                        // darknet框架函数，释放内存
-    return middle_layer_output;
+    return middle_layer_output;                             // 返回指针
 }
 
 //--------------------------------------------------------------------------------------------------------------
@@ -218,17 +218,28 @@ int SGX_CDECL main(int argc, char *argv[])
 
     // 测试数据部分
     // 如果主机为前层进行训练的：
-    clock_gettime(CLOCK_MONOTONIC_RAW, &start_1);                                 // 获得当前时钟，存放在start_1中，记作为测试开始的时钟;           
-    float middle_layer_output = test_mnist(cfg);                                             // 测试数据,神经网络配置文件cfg = MNIST_CFG= "./App/dnet-out/cfg/alexnet.cfg";
+    clock_gettime(CLOCK_MONOTONIC_RAW, &start_1);                                 // 获得当前时钟，存放在start_1中，记作为测试开始的时钟;
+     // 测试数据,神经网络配置文件cfg = MNIST_CFG= "./App/dnet-out/cfg/alexnet.cfg";
+     // 返回中间层的返回值；           
+    float *middle_layer_output = test_mnist(cfg);                                            
     clock_gettime(CLOCK_MONOTONIC_RAW, &stop_1);                                      //  获取当前时钟，存放到stop中，就作为测试结束的时钟;
     printf("Total inference time: %f mins\n", time_diff(&start_1, &stop_1, SEC) / 60);                          // 打印测试数据所需要的时间;
+
+
+    // 传输数据，数据为float middle_layer_output;
+
+
+
+
+
+
 
     //Destroy enclave
     // 程序执行完成，销毁enclave
     sgx_destroy_enclave(global_eid);  
 
 
-    // 传输数据，数据为float middle_layer_output;
+    
 
     return 0;
 }
